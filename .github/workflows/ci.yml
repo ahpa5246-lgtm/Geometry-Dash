@@ -19,10 +19,12 @@ jobs:
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy opencv-python pytest
+          python -m pip install "numpy>=1.26,<3" "opencv-python>=4.9,<5" "pytest>=8,<10"
 
       - name: Compile Python sources
         run: python -m compileall -q gd_ai
 
       - name: Test motion detector
-        run: pytest -q tests/test_motion_detector.py
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q tests/test_motion_detector.py
