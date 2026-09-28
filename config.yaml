@@ -1,0 +1,49 @@
+seed: 42
+
+window:
+  title_contains: "Geometry Dash"
+  observation_width: 84
+  observation_height: 84
+  grayscale: true
+  crop:
+    left: 0.00
+    top: 0.00
+    right: 1.00
+    bottom: 1.00
+
+input:
+  key: "space"
+  start_key: "space"
+
+environment:
+  step_hz: 20
+  alive_reward: 0.01
+  death_penalty: -1.0
+  max_episode_seconds: 180
+  reset_wait_seconds: 0.75
+  post_start_wait_seconds: 0.20
+
+  # Visual end-of-run detector. During gameplay the background scrolls.
+  # When the screen becomes nearly static for several frames, the episode ends.
+  freeze_motion_threshold: 0.004
+  freeze_frames: 8
+  detector_warmup_frames: 18
+
+learning:
+  algorithm: "recurrent_ppo"
+  total_timesteps: 10000000
+  learning_rate: 0.00025
+  n_steps: 2048
+  batch_size: 128
+  gamma: 0.995
+  gae_lambda: 0.95
+  ent_coef: 0.01
+  vf_coef: 0.5
+  clip_range: 0.2
+  device: "auto"
+  checkpoint_every_steps: 100000
+
+paths:
+  runs_dir: "runs"
+  models_dir: "models"
+  tensorboard_dir: "runs/tensorboard"
