@@ -1,0 +1,12 @@
+numpy>=1.26,<3
+opencv-python>=4.9,<5
+mss>=9,<11
+pywin32>=306
+pydirectinput>=1.0.4
+gymnasium>=0.29,<2
+stable-baselines3[extra]>=2.4,<3
+sb3-contrib>=2.4,<3
+torch>=2.2
+PyYAML>=6
+tensorboard>=2.15
+rich>=13
