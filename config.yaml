@@ -23,11 +23,14 @@ environment:
   reset_wait_seconds: 0.75
   post_start_wait_seconds: 0.20
 
-  # Visual end-of-run detector. During gameplay the background scrolls.
-  # When the screen becomes nearly static for several frames, the episode ends.
+  # Visual end-of-run detector. Tune this during ACTIVE gameplay, not the menu.
   freeze_motion_threshold: 0.004
   freeze_frames: 8
   detector_warmup_frames: 18
+
+replay:
+  enabled: true
+  chunk_size: 2000
 
 learning:
   algorithm: "recurrent_ppo"
@@ -43,7 +46,19 @@ learning:
   device: "auto"
   checkpoint_every_steps: 100000
 
+offline_learning:
+  algorithm: "discrete_cql"
+  gradient_steps: 500000
+  batch_size: 128
+  learning_rate: 0.0001
+  gamma: 0.995
+  cql_alpha: 0.10
+  target_update_every: 2000
+  save_every: 25000
+  device: "auto"
+
 paths:
   runs_dir: "runs"
   models_dir: "models"
   tensorboard_dir: "runs/tensorboard"
+  replay_dir: "runs/replay"
