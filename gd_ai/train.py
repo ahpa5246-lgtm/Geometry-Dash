@@ -10,6 +10,7 @@ from stable_baselines3.common.monitor import Monitor
 from .callbacks import BestEpisodeCallback
 from .config import load_config
 from .env import GeometryDashEnv
+from .replay import PersistentReplayWrapper
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -37,15 +38,25 @@ def main() -> None:
 
     paths = cfg["paths"]
     learning = cfg["learning"]
+    replay_cfg = cfg.get("replay", {})
 
     runs_dir = Path(paths["runs_dir"])
     models_dir = Path(paths["models_dir"])
     tensorboard_dir = Path(paths["tensorboard_dir"])
+    replay_dir = Path(paths.get("replay_dir", "runs/replay"))
     runs_dir.mkdir(parents=True, exist_ok=True)
     models_dir.mkdir(parents=True, exist_ok=True)
     tensorboard_dir.mkdir(parents=True, exist_ok=True)
+    replay_dir.mkdir(parents=True, exist_ok=True)
 
-    env = Monitor(GeometryDashEnv(cfg), filename=str(runs_dir / "monitor.csv"))
+    live_env = GeometryDashEnv(cfg)
+    live_env = PersistentReplayWrapper(
+        live_env,
+        directory=replay_dir,
+        chunk_size=int(replay_cfg.get("chunk_size", 2000)),
+        enabled=bool(replay_cfg.get("enabled", True)),
+    )
+    env = Monitor(live_env, filename=str(runs_dir / "monitor.csv"))
     total_timesteps = int(args.timesteps or learning["total_timesteps"])
 
     if args.resume:
