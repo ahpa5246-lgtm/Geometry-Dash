@@ -1,5 +1,34 @@
 # Geometry Dash — Self-Learning AI
 
+## Download, setup and project overview
+
+A local computer-vision and training toolkit for Geometry Dash.
+
+Frame observation; motion-based episode termination; configuration; local training scripts.
+
+![Project workflow illustration](docs/project-overview.svg)
+
+[Download source ZIP](https://github.com/ahpa5246-lgtm/Geometry-Dash/archive/refs/heads/main.zip) · [Changes and branches](https://github.com/ahpa5246-lgtm/Geometry-Dash/branches) · [Verification notes](docs/QUALITY_REVIEW.md)
+
+The ZIP contains source code. Installation steps and external runtime requirements are listed below.
+
+```bash
+git clone https://github.com/ahpa5246-lgtm/Geometry-Dash.git
+cd Geometry-Dash
+```
+
+From the repository directory:
+
+```text
+python -m venv .venv
+# Activate .venv before installing packages.
+python -m pip install -r requirements.txt
+# Follow the task-specific CLI / notebook instructions below.
+```
+
+The diagram is a project illustration. Test results and runtime limitations are recorded in [the review](docs/QUALITY_REVIEW.md); it is not a production-readiness certification.
+
+
 A visual reinforcement-learning project that starts from random weights and learns from experience it generates by playing.
 
 No pretrained model, human demonstrations, pre-collected gameplay dataset, obstacle coordinates, player coordinates, or game-memory reading are required.

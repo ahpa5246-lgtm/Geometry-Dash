@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from collections import deque
 
 import cv2
@@ -23,6 +24,10 @@ class MotionEndDetector:
         self.threshold = float(threshold)
         self.freeze_frames = int(freeze_frames)
         self.warmup_frames = int(warmup_frames)
+        if not math.isfinite(self.threshold) or not 0 <= self.threshold <= 1:
+            raise ValueError("threshold must be finite and between 0 and 1")
+        if self.freeze_frames < 1 or self.warmup_frames < 0:
+            raise ValueError("freeze_frames must be positive and warmup_frames nonnegative")
         self._prev: np.ndarray | None = None
         self._low_motion = 0
         self._steps = 0
